@@ -1,0 +1,15 @@
+pandas
+numpy
+scikit-learn
+nltk
+regex
+emoji
+joblib
+streamlit
+matplotlib
+seaborn
+tqdm
+jupyterlab
+torch
+transformers
+tokenizers
