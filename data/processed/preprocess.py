@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Preprocessing script for Abusive Comment Detection and Prevention (Hinglish).
 Saves cleaned output to data/processed/hinglish_clean.csv by default.
@@ -19,13 +19,13 @@ from tqdm import tqdm
 
 import pandas as pd
 
-# Optional libraries (install via requirements.txt)
+
 try:
     import emoji
 except Exception:
     emoji = None
 
-# try to import nltk stopwords (optional)
+
 USE_NLTK = True
 try:
     import nltk
@@ -64,11 +64,9 @@ HINGLISH_MAP = {
     "theek": "theek",
     "plz": "please",
     "pls": "please",
-    "bc": "bitch",  # be careful; this is only for normalization examples
-    # add more domain-specific mappings if needed
+    "bc": "bitch",  
 }
 
-# Minimal punctuation we want to keep (if any). We will keep ? and ! for sentiment cues.
 PUNCT_KEEP = "?!"
 
 # ---------------------
