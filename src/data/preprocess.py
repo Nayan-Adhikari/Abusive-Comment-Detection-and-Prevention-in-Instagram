@@ -1,13 +1,3 @@
-
-"""
-Preprocessing script for Abusive Comment Detection and Prevention (Hinglish).
-Saves cleaned output to data/processed/hinglish_clean.csv by default.
-
-Usage:
-    python src/data/preprocess.py
-    python src/data/preprocess.py --input data/raw/hinglish_comments_15000.csv --output data/processed/hinglish_clean.csv
-"""
-
 import argparse
 import os
 import re
@@ -38,7 +28,7 @@ except Exception:
 # ---------------------
 # Configuration
 # ---------------------
-DEFAULT_INPUT = "data/raw/hinglish_comments_15000.csv"
+DEFAULT_INPUT = "data/raw/instagram_raw_comments_90k.csv"
 DEFAULT_OUTPUT = "data/processed/hinglish_clean.csv"
 SAMPLE_ROWS_TO_PRINT = 8
 
@@ -83,22 +73,6 @@ def safe_read_csv(path: str) -> pd.DataFrame:
     # read with engine and low_memory off
     df = pd.read_csv(path, encoding="utf-8", engine="python")
     return df
-
-def replace_emoji(text: str) -> str:
-    """Remove or replace emojis. Uses emoji lib if available, otherwise naive regex."""
-    if text is None:
-        return ""
-    if emoji:
-        try:
-            return emoji.replace_emoji(text, replace="")
-        except Exception:
-            pass
-    # fallback regex (approx) to strip common unicode emoji ranges
-    try:
-        # remove most non-word symbols and emoticons
-        return re.sub(r"[\U00010000-\U0010ffff]", "", text)
-    except re.error:
-        return text
 
 def remove_urls_mentions_hashtags(text: str) -> str:
     text = re.sub(r"http\S+|www\.\S+", " ", text)
@@ -147,7 +121,6 @@ def clean_text(raw: str, stopwords_set: set = None, remove_stopwords_flag: bool 
     text = str(raw)
     text = text.strip()
     text = lowercase(text)
-    text = replace_emoji(text)
     text = remove_urls_mentions_hashtags(text)
     text = normalize_repeated_chars(text)
     text = apply_hinglish_map(text)
